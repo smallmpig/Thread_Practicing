@@ -10,6 +10,10 @@ import java.util.concurrent.locks.ReentrantLock;
  *
  * 與synchronized 不同得是，實作了其他功能，例如公平鎖，trylock 等等
  *
+ * lock()：若lock被thread A取得，thread B會進入block狀態，直到取得lock。
+ * tryLock()：若當下不能取得lock，thread就會放棄。
+ * lockInterruptibly()：跟lock()情況一下，但是thread B可以透過interrupt被喚醒處理InterruptedException。
+ *
  * 公平鎖:代表所有的鎖都有獲得執行的機會，按照鎖請求的順序來管控鎖資源(使用Queue)
  * 非公平鎖:亦即不使用Queue 來操作
  *
@@ -22,7 +26,6 @@ public class UsingExplicitReentrantLock {
 
     public void lockMyHearth(){
         reentrantLock.lock();
-
         try{
             //state 會有序地進行切換
             System.out.println("Changing stated in a serialized way");
